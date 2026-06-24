@@ -2,7 +2,7 @@ name: Validate CloudFormation on PR
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed] # <-- clean up job listens for one of these triggers. maybe?? again1 and another one.
+    types: [opened, synchronize, reopened, closed] # <-- clean up job listens for one of these triggers. maybe?? lets try this again.
     paths:
       - 'cloudformation/**'
 
@@ -12,7 +12,6 @@ permissions:
 
 jobs:
   validate-cfn:
-    #if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
