@@ -2,16 +2,18 @@ name: Validate CloudFormation on PR
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed] # <-- clean up job listens for one of these triggers. maybe?? lets try this again.
+    types: [opened, synchronize, reopened, closed] 
     paths:
       - 'cloudformation/**'
 
 permissions:
-  pull-requests: write # Corrected: needs to be plural with a hyphen
+  pull-requests: write 
   contents: read
 
 jobs:
   validate-cfn:
+    # FIX 1: This stops the job from running during a merge!
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,7 +32,8 @@ jobs:
       - name: Deploy our stack
         run: |
           stack_name="pr-test-stack-${{github.event.pull_request.number}}"
-          aws cloudformation create-stack --stack-name $stack_name --template-body file://cloudformation/s3-bucket.yml --parameters ParameterKey=Environment,ParameterValue=test
+          # FIX 2: Changed 'create-stack' to 'deploy' so it doesn't crash on new commits!
+          aws cloudformation deploy --stack-name $stack_name --template-file cloudformation/s3-bucket.yml --parameter-overrides Environment=test
 
       - name: Comment on the PR
         uses: actions/github-script@v6
