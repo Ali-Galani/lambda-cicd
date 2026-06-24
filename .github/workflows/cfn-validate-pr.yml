@@ -34,7 +34,7 @@ jobs:
       - name: Comment on the PR
         uses: actions/git-hub-script@v6
         with:
-          github-token: ${{secrests.GITHUB_TOKEN}}
+          github-token: ${{secrets.GITHUB_TOKEN}}
           scriptt: |
             github.rest.issues.creatComment({
              issue_number: contet.issu.number,
