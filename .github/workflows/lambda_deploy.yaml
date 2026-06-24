@@ -1,4 +1,4 @@
-name: Deploy AWS Lambda #TITLE
+name: Deploy AWS Lambda #TITLE updated
 
 on:
   push:
