@@ -2,6 +2,7 @@ name: Validate CloudFormation on PR
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, closed] # <-- clean up job listens for one of these triggers.
     paths:
       - 'cloudformation/**'
 
